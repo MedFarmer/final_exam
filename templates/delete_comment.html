@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %} удалить комментарий {% endblock %}
+{% block content %} 
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">Подтверждение удаления комментария</h2>
+                    <p class="card-text">Вы уверены что хотите удалить этот комментарий?</p>                    
+                    <form method="post">
+                        {% csrf_token %} 
+                        <button type="submit" class="btn btn-danger">Удалить</button>
+                        <a href="{% url 'post' subrubric_pk=comments.post.rubric.pk post_pk=comments.post.pk  %}" class="btn btn-secondary">Отмена</a>
+                    </form>                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

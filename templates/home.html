@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} главная {% endblock %}
+{% block content %}
+<div class='common'> 
+<h3 style="text-align: center;"> Доска объявлений </h3> <br> <br>
+  {% for rubric in rubrics %}
+    {% if rubric.parent == None %}
+      <p class="d-block-flex gap-1">
+        <a
+          class="btn btn-success"
+          data-bs-toggle="collapse"
+          href="#collapse_{{ rubric.id }}"
+          role="button"
+          aria-expanded="false"
+          aria-controls="collapse_{{ rubric.id }}"
+        >
+          {{ rubric.name }}
+        </a>
+      </p>
+      <div class="collapse" id="collapse_{{ rubric.id }}">
+        <div class="card card-body">
+          {% for subrubric in rubric.subrubric.all %}
+            <a href="{% url 'posts' subrubric_pk=subrubric.pk %}"><p> {{ subrubric.name }} </p></a>
+          {% endfor %}
+        </div>
+      </div>
+
+    {% endif %}
+  {% endfor %}
+</div>
+{% endblock %}

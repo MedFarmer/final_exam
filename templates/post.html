@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load static %}
+{% load custom_filters %}
+{% block title %} post {% endblock %}
+{% block content %}
+
+<h3> {{ post.title }} </h3>
+<h6> Рубрика: {{ post.rubric.name }} </h6>
+
+<div style="padding-top:30px; padding-bottom: 30px;"><img src="{{ post.image.profile.url }}"></div>
+<p> {{ post.content }} </p>
+
+<p>   Цена: {{ post.price|thousands_with_spaces }} тенге</p>
+<p><i class="fa-solid fa-phone"></i> 
+{% if user.is_authenticated %}  {{ post.contact }}
+{% else %} Зарегистрируйтесь что бы увидеть номер
+{% endif %}
+</p>
+{% if post.author.username == request.user.username %}
+<a href="{% url 'update_post' subrubric_pk=post.rubric.pk post_pk=post.pk %}" class="btn btn-success w-40 py-2"> 
+    Изменить объявление</a> 
+{% endif %}
+<br> <br>
+<h3> Комментарий </h3> <br>
+<table  class="table table-bordered">
+{% for each in comments %}
+        <tr>
+            <td style="width:300px;">{{ each.created_at }} <br> Автор: {{ each.author }} </td>
+            <td>{{ each.content }} <br> {% if each.author.username == request.user.username %}
+                <a class="btn btn-warning" href="{% url 'delete_comment' subrubric_pk=post.rubric.pk post_pk=each.post.pk comment_pk=each.pk %} "> Удалить комментарий </a> 
+                {% endif %}
+            </td>
+        </tr>
+{% endfor %}
+</table>
+
+<form method="POST">
+    {% csrf_token %}
+    <div class="row-md-2">
+        <input type="text" class="form-control  mb-2" name="content" placeholder= {% if request.user.is_authenticated %} "Введите комментарий" {% else %} "Что бы добавить комментарий нужно войти" {% endif%} {% if request.user.is_authenticated %} {% else %} readonly {% endif%} >                
+    </div>
+    <div class="row-md-2">        
+        <button type="submit" class="btn btn-success" {% if request.user.is_authenticated %} {% else %} disabled {% endif%}>Добавить комментарий</button>
+    </div>
+</form>
+{% endblock %}

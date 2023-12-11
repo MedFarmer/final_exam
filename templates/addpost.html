@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Добавить объявление{% endblock %}
+{% block content %}
+    <div class="container">
+        <form method="post" class='col-md-4' enctype="multipart/form-data">
+            {% csrf_token %}
+            <h3 class="h3">Введите данные объявления </h3> <br>
+            {% for field, errors in form.errors.items %}
+            <p>{{ field }}:
+                {% for error in errors %}
+                    {{ error|escape }}
+                    {% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </p>
+            {% endfor %}
+
+            <div class="row-md-2">
+                <select id="rubric" name="rubric" class="form-select mb-2">
+                    {% for subrubric in subrubrics %}
+                        <option value="{{ subrubric.id }}"> {{ subrubric.name }} </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="row-md-2">
+                <input type="text"  class="form-control mb-2" name="title" placeholder="Наименование">
+            </div>
+            <div class="row-md-2">
+                <textarea type="text"  class="form-control mb-2" name="content" placeholder="Описание" style="height: 200px;" rows="5" cols="50"> </textarea>
+            </div>
+            <div class="row-md-2">
+                <input type="number"  class="form-control mb-2" name="price" placeholder="Цена">
+            </div>
+            <div class="row-md-2">
+                <input type="text"  class="form-control mb-2" name="contact" placeholder="Контакты"  style="height: 80px;">
+            </div>
+            <div class="row-md-2">
+                <input type="file"  class="form-control mb-2" name="image" placeholder="Картинка">
+            </div> <br>
+            <div class="row-md-2">
+                <a href="{% url 'home' %}" class="btn btn-secondary">Назад</a>
+                <button type="submit" class="btn btn-success">Добавить</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+

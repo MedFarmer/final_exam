@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %} Login {% endblock %}
+{% block content %} 
+
+<div style="padding:30px 550px 30px 550px">
+    <form method="post">
+        {% csrf_token %}
+        <h1 class="h3">Войти</h1>
+        
+        <div class="row-md-2">
+            <input type="text" class="form-control mb-2" name="username" placeholder="username">                
+        </div>
+        <div class="row-md-2">
+            <input type="password" class="form-control mb-4" name="password" placeholder="Password">                
+        </div>
+        
+        <div class="row-md-2">
+            <button class="btn btn-success w-100 py-2" type="submit">Войти</button> <br> <br>
+            <div class='container'>
+                <div class="d-flex justify-content-between">
+                    <a href="{% url 'signup' %}" style="font-size: 18px; text-align: left;"> Не зарегестрирован? </a>
+                    <a href="{% url 'reset' %}" style="font-size: 18px; text-align: right;"> Забыл пароль? </a>
+
+                </div>
+            </div>  
+        </div>
+    </form>
+</div>
+
+{% endblock %}
