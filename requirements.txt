@@ -1,1 +1,3 @@
 django
+easy-thumbnails
+django-cleanup
