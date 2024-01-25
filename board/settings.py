@@ -11,7 +11,7 @@ SECRET_KEY = 'django-insecure-8k)u8t*4e9h-lsr$qr+7t94apgqsa-9)l3s^yktifv3rbh&pga
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['https://ad-board.onrender.com', 'http://127.0.0.1:8000']
 """ Включена библиотека  easy_thumbnails и django_cleanup.apps"""
 INSTALLED_APPS = [
     'django.contrib.admin',
