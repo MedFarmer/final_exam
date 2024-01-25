@@ -1,3 +1,7 @@
 from django.test import TestCase
+import os
+from dotenv import load_dotenv
 
-# Create your tests here.
+load_dotenv()
+
+print(os.environ.get("DATABASE_URL"))

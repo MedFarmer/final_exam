@@ -1,13 +1,17 @@
 import os
 from pathlib import Path
+import dj_database_url
+from dotenv import load_dotenv
+
+load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-8k)u8t*4e9h-lsr$qr+7t94apgqsa-9)l3s^yktifv3rbh&pga'
 
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 """ Включена библиотека  easy_thumbnails и django_cleanup.apps"""
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -18,7 +22,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',    
     'app',
     'easy_thumbnails',
-    'django_cleanup.apps.CleanupConfig',
+    'dj_database_url',
+    'django_cleanup.apps.CleanupConfig',        
 ]
 
 MIDDLEWARE = [
@@ -51,12 +56,22 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'board.wsgi.application'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if DEBUG == True:
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
+
+else:
+    
+    DATABASES = {
+	"default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
 }
+
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
